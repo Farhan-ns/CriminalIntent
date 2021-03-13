@@ -36,4 +36,28 @@ class CrimeFragment : Fragment() {
 
         return view
     }
+
+    override fun onStart() {
+        super.onStart()
+
+        /*Setting the listener in onStart()
+        * So that input-dependent widget does not get triggered
+        * when is view restored
+        */
+        val titleWatcher = object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                //Intentionally blank
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                //Intentionally blank
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                crime.title = s.toString()
+            }
+        }
+
+        edtTitleField.addTextChangedListener(titleWatcher)
+    }
 }
